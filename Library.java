@@ -1,4 +1,4 @@
-import java.until.ArrayList;
+import java.util.ArrayList;
 
 public class Library {
     private ArrayList<MediaEntry> entries;
@@ -40,7 +40,7 @@ public class Library {
         MediaEntry entry = getEntry(title);
 
         if(entry == null) {
-            Systme.out.println(title + " not found.");
+            System.out.println(title + " not found.");
         } else {
             System.out.println("Title: " + entry.getTitle());
             System.out.println("Media Type: " + entry.getMediaType());
