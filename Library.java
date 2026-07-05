@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Library {
+public class Library implements java.io.Serializable {
     private ArrayList<MediaEntry> entries;
 
     public Library() {
