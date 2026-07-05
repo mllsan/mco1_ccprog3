@@ -11,6 +11,8 @@ public class MediaEntry {
         this.review = review;
     }
 
+    public abstract getMediaType();
+
     public String getTitle(){
         return title;
     }

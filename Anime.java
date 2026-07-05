@@ -6,6 +6,10 @@ public class Anime extends MediaEntry {
         this.numOfEps = numOfEps;
     }
 
+    public String getMediaType(){
+        return "Anime";
+    }
+
     public int getNumEps(){
         return numOfEps;
     }

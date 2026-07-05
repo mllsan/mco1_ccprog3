@@ -6,6 +6,10 @@ public class Movie extends MediaEntry {
         this.duration = duration;
     }
 
+    public String getMediaType(){
+        return "Movie";
+    }
+
     public int getDuration(){
         return duration;
     }

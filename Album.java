@@ -6,6 +6,10 @@ public class Album extends MediaEntry {
         this.artist = artist;
     }
 
+    public String getMediaType(){
+        return "Album";
+    }
+
     public String getArtist(){
         return artist;
     }
