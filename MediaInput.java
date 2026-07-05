@@ -32,7 +32,7 @@ public class MediaInput {
         System.out.print("Enter Number of Episodes: ");
         int numOfEps = Integer.parseInt(input.nextLine());
 
-        int rating = -1;
+        int rating = 0;
         String review = "N/A";
 
         if (status != Status.PLANNED) {
