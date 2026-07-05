@@ -54,7 +54,7 @@ public class Main {
                     break;
                     
                 case 2:
-                    System.out.println("Choose an operation:");
+                    System.out.println("Choose an Action:");
                     System.out.println("[1] Add Anime");
                     System.out.println("[2] Add Movie");
                     System.out.println("[3] Add Album");
