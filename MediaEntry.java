@@ -1,4 +1,4 @@
-public class MediaEntry {
+public class MediaEntry implements java.io.Serializable {
     private String title;
     private Status status;
     private int rating;
