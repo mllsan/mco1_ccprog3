@@ -18,15 +18,24 @@ public class Main {
                 String username = scanner.nextLine();
                 activeAccount = SaveData.loadAccount(username);
             }
-            else if (loginChoice == 2){
-                System.out.print("Create New Username: ");
-                String newUsername = scanner.nextLine();
-                
+            else if (loginChoice == 2) {
+                String newUsername = "";
+                boolean choosingUsername = true;
+
+                while (choosingUsername) {
+                    System.out.print("Create New Username: ");
+                    newUsername = scanner.nextLine();
+
+                    if (SaveData.accountExists(newUsername)) {
+                        System.out.println("Error: Username '" + newUsername + "' Already Taken.\n");
+                    } else {
+                        choosingUsername = false;
+                    }
+                }
                 activeAccount = new User(newUsername);
                 System.out.println("User '" + newUsername + "' Created Successfully!");
-                
                 SaveData.saveAccount(activeAccount);
-            } 
+            }
             else {
                 System.out.println("Error: Invalid choice\n");
             }
@@ -39,7 +48,7 @@ public class Main {
             System.out.println("===================================");
             System.out.println("[1] View My Library");
             System.out.println("[2] Add Media Entry");
-            System.out.println("[3] Edit Existing Entry");
+            System.out.println("[3] Search for an Existing Entry");
             System.out.println("[4] View Library Summary");
             System.out.println("[0] Save and Exit");
             System.out.print(">> ");
@@ -113,20 +122,37 @@ public class Main {
                     System.out.println("[3] Album");
                     System.out.print(">> ");
                     int mediaChoice = InputChecker.getValidInput(scanner,1,3);
-                    MediaEntry newEntry = media.createMediaReview(mediaChoice);
+                    MediaEntry newEntry = media.createMediaReview(mediaChoice, activeAccount.getLibrary());
+                    if (newEntry != null) {
+                        activeAccount.getLibrary().addEntry(newEntry);
+                    }
                     break;
                     
                 case 3:
-                    System.out.println("Enter the title of the entry you want to edit:");
+                    System.out.println("Enter the Title of the Entry");
                     System.out.print(">> ");
                     String title = scanner.nextLine();
-                    
-                    MediaEntry entry = activeAccount.getLibrary().getEntry(title);
 
-                    if (entry == null) {
-                        System.out.println(title + " not found.");
-                    } else {
-                        // need to edit MediaInput first
+                    System.out.println();
+                    activeAccount.getLibrary().retrieveEntry(title);
+                    System.out.println();
+                    System.out.println("[1] Edit Entry");
+                    System.out.println("[2] Remove Entry");
+                    System.out.println("[3] Go Back to Menu");
+                    System.out.print(">> ");
+                    int editOption = InputChecker.getValidInput(scanner, 1, 3);
+
+                    if (editOption==1){
+                        MediaEntry entry = activeAccount.getLibrary().getEntry(title);
+
+                        if (entry == null) {
+                            System.out.println(title + " not found.");
+                        } else {
+                            // need to edit MediaInput first
+                        }
+                    }
+                    else if (editOption==2){
+                        activeAccount.getLibrary().removeEntry(title);
                     }
                     break;
 
