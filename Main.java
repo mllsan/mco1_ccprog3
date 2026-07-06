@@ -41,7 +41,6 @@ public class Main {
             System.out.println("[2] Add Media Entry");
             System.out.println("[3] Edit Existing Entry");
             System.out.println("[4] View Library Summary");
-            System.out.println("[5] Save Progress");
             System.out.println("[0] Save and Exit");
             System.out.print(">> ");
             int mainChoice = InputChecker.getValidInput(scanner,0,5);
@@ -55,6 +54,7 @@ public class Main {
                     System.out.println("[3] Media Type");
                     System.out.print(">> ");
                     int viewChoice = InputChecker.getValidInput(scanner,1,3);
+                    System.out.println("");
 
                     switch (viewChoice) {
                         case 1:
@@ -67,6 +67,7 @@ public class Main {
                             System.out.println("[3] Completed");
                             System.out.print(">> ");
                             int statusChoice = InputChecker.getValidInput(scanner,1,3);
+                            System.out.println("");
 
                             switch (statusChoice){
                                 case 1: 
@@ -81,6 +82,7 @@ public class Main {
                                 default:
                                     System.out.println("Error: Invalid Option");
                             }
+                            break;
                         case 3:
                             System.out.println("Choose Media Type:");
                             System.out.println("[1] Anime");
@@ -102,8 +104,6 @@ public class Main {
                                 default:
                                     System.out.println("Error: Invalid Option");
                             }
-                        default:
-                            System.out.println("Error: Invalid Option");
                     }
                     break;
                     
@@ -148,10 +148,6 @@ public class Main {
 
                 case 4:
                     activeAccount.getLibrary().displaySummary();
-                    break;
-                    
-                case 5:
-                    SaveData.saveAccount(activeAccount);
                     break;
                     
                 case 0:
