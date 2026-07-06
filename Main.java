@@ -43,7 +43,7 @@ public class Main {
             System.out.println("[4] View Library Summary");
             System.out.println("[0] Save and Exit");
             System.out.print(">> ");
-            int mainChoice = InputChecker.getValidInput(scanner,0,5);
+            int mainChoice = InputChecker.getValidInput(scanner,0,4);
             System.out.println("");
 
             switch (mainChoice){
@@ -67,7 +67,6 @@ public class Main {
                             System.out.println("[3] Completed");
                             System.out.print(">> ");
                             int statusChoice = InputChecker.getValidInput(scanner,1,3);
-                            System.out.println("");
 
                             switch (statusChoice){
                                 case 1: 
@@ -114,22 +113,7 @@ public class Main {
                     System.out.println("[3] Album");
                     System.out.print(">> ");
                     int mediaChoice = InputChecker.getValidInput(scanner,1,3);
-                    
-                    if (mediaChoice == 1){
-                        Anime anime = media.createAnimeReview();
-                        activeAccount.getLibrary().addEntry(anime);
-                    } 
-                    else if (mediaChoice == 2){
-                        Movie movie = media.createMovieReview();
-                        activeAccount.getLibrary().addEntry(movie);
-                    } 
-                    else if (mediaChoice == 3){
-                        Album album = media.createAlbumReview();
-                        activeAccount.getLibrary().addEntry(album);
-                    }
-                    else{
-                        System.out.println("Error: Invalid Option");
-                    }
+                    MediaEntry newEntry = media.createMediaReview(mediaChoice);
                     break;
                     
                 case 3:
