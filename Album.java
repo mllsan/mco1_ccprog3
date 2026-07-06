@@ -13,4 +13,8 @@ public class Album extends MediaEntry {
     public String getArtist(){
         return artist;
     }
+
+    public void setArtist(String artist){
+        this.artist = artist;
+    }
 }
