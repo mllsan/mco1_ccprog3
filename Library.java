@@ -43,7 +43,12 @@ public class Library implements java.io.Serializable {
             System.out.println(title + " not found.");
         } else {
             System.out.println("Title: " + entry.getTitle());
-            System.out.println("Media Type: " + entry.getMediaType());
+            if (entry instanceof Album) 
+                System.out.println("Media Type: Album");
+            else if (entry instanceof Anime) 
+                System.out.println("Media Type: Anime");
+            else if (entry instanceof Movie) 
+                System.out.println("Media Type: Movie");
             System.out.println("Status: " + entry.getStatus());
             System.out.println("Rating: " + entry.getRating());
             System.out.println("Review: " + entry.getReview());
@@ -95,14 +100,21 @@ public class Library implements java.io.Serializable {
                 if(entry.getStatus() == status) {
                     found = true;
                     System.out.println("Title: " + entry.getTitle());
-                    System.out.println("Media Type: " + entry.getMediaType());
-
-                    if(entry.getMediaType().equals("Album")) {
-                        System.out.println("Artist: " + entry.getArtist());
-                    } else if(entry.getMediaType().equals("Anime")) {
-                        System.out.println("Number of Episodes: " + entry.getNumEps());
-                } else {
-                        System.out.println("Duration: " + entry.getDuration() + "minutes");
+                    
+                    if(entry instanceof Album) {
+                        Album album = (Album) entry;
+                        System.out.println("Media Type: Album");
+                        System.out.println("Artist: " + album.getArtist());
+                    } 
+                    else if(entry instanceof Anime) {
+                        Anime anime = (Anime) entry;
+                        System.out.println("Media Type: Anime");
+                        System.out.println("Number of Episodes: " + anime.getNumEps());
+                    } 
+                    else if(entry instanceof Movie) {
+                        Movie movie = (Movie) entry;
+                        System.out.println("Media Type: Movie");
+                        System.out.println("Duration: " + movie.getDuration() + " minutes");
                     }
 
                     System.out.println("Rating: " + entry.getRating());
@@ -126,16 +138,27 @@ public class Library implements java.io.Serializable {
                 System.out.println("Library is empty.");
         } else {
             for(MediaEntry entry : entries) {
-                if(entry.getMediaType().equalsIgnoreCase(type)) {
+                boolean matches = false;
+                if(type.equalsIgnoreCase("Album") && entry instanceof Album) 
+                    matches = true;
+                else if(type.equalsIgnoreCase("Anime") && entry instanceof Anime) 
+                    matches = true;
+                else if(type.equalsIgnoreCase("Movie") && entry instanceof Movie) 
+                    matches = true;
+
+                if(matches) {
                     found = true;
                     System.out.println("Title: " + entry.getTitle());
 
-                    if(type.equals("Album")) {
-                        System.out.println("Artist: " + entry.getArtist());
-                    } else if(type.equals("Anime")) {
-                        System.out.println("Number of Episodes: " + entry.getNumEps());
-                    } else {
-                        System.out.println("Duration: " + entry.getDuration() + "minutes");
+                    if(entry instanceof Album) {
+                        Album album = (Album) entry;
+                        System.out.println("Artist: " + album.getArtist());
+                    } else if(entry instanceof Anime) {
+                        Anime anime = (Anime) entry;
+                        System.out.println("Number of Episodes: " + anime.getNumEps());
+                    } else if(entry instanceof Movie) {
+                        Movie movie = (Movie) entry;
+                        System.out.println("Duration: " + movie.getDuration() + " minutes");
                     }
 
                     System.out.println("Status: " + entry.getStatus());
