@@ -33,4 +33,10 @@ public class SaveData {
             return null;
         }
     }
+
+    public static boolean accountExists(String username) {
+        String fileName = username + ".sav";
+        File file = new File(fileName);
+        return file.exists();
+    }
 }
