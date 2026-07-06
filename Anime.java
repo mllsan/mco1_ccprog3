@@ -13,4 +13,8 @@ public class Anime extends MediaEntry {
     public int getNumEps(){
         return numOfEps;
     }
+
+    public void setNumEps(int numOfEps){
+        this.numOfEps = numOfEps;
+    }
 }
