@@ -24,6 +24,7 @@ public class MediaInput {
     public MediaEntry createMediaReview(int mediaChoice, Library library){
         int rating = 0, numOfEps = 0, duration = 0, reviewExists = 1;
         String review = "", artist = "";
+        MediaEntry result = null;
 
         System.out.print("Enter Title: ");
         String title = input.nextLine();
@@ -56,16 +57,16 @@ public class MediaInput {
             }
 
             if (mediaChoice == 1){
-                return new Anime(title, status, rating, review, numOfEps);
+                result = new Anime(title, status, rating, review, numOfEps);
             } else if (mediaChoice == 2){
-                return new Movie(title, status, rating, review, duration);
+                result = new Movie(title, status, rating, review, duration);
 
             } else if (mediaChoice == 3){
-                return new Album(title, status, rating, review, artist);
+                result = new Album(title, status, rating, review, artist);
             }
         }
 
-        return null;
+        return result;
     }
 
     public void editAnimeReview(Library library){
