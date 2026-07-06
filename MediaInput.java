@@ -104,7 +104,6 @@ public class MediaInput {
 
         if (entry == null){
             System.out.println("'" + title + "' Not Found");
-            return;
         } 
         else{
             Anime anime = (Anime) entry;
@@ -174,7 +173,6 @@ public class MediaInput {
 
         if (entry == null){
             System.out.println("'" + title + "' Not Found");
-            return;
         }
         else{
             Movie movie = (Movie) entry;
@@ -244,7 +242,6 @@ public class MediaInput {
 
         if (entry == null){
             System.out.println("'" + title + "' Not Found");
-            return;
         }
         else{
             Album album = (Album) entry;
