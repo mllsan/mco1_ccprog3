@@ -7,7 +7,7 @@ public class SaveData {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
             oos.writeObject(user);
         } catch (IOException e) {
-            System.out.println("Error saving user: " + e.getMessage());
+            System.out.println("Error Saving User: " + e.getMessage());
         }
     }
 
@@ -15,19 +15,21 @@ public class SaveData {
         String fileName = username + ".sav";
         File file = new File(fileName);
 
-        if (!file.exists()) {
-            System.out.println("No user found");
-            return null;
-        }
-
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             User loadedAccount = (User) ois.readObject();
-            System.out.println();
-            System.out.println("Welcome back " + loadedAccount.getUsername() + "!");
-            return loadedAccount;
+            if (!loadedAccount.getUsername().equals(username)) {
+                System.out.println("Error: No User Found.");
+                System.out.println();
+            }
+            else {
+                System.out.println();
+                System.out.println("Welcome Back " + loadedAccount.getUsername() + "!");
+                return loadedAccount;
+            }
+            return null;
         } 
         catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading user: " + e.getMessage());
+            System.out.println("Error Loading User: " + e.getMessage());
             return null;
         }
     }
