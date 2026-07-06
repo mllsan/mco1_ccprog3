@@ -7,7 +7,7 @@
 
 Enter this in terminal to compile the program: 
 ```
-javac javac *.java
+javac *.java
 ```
 Enter this in terminal to run the program:
 ```
