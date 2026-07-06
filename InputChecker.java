@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class InputChecker {
     public static int getValidInput(Scanner scanner, int min, int max) {
         int num = 0;
