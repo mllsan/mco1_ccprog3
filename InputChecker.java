@@ -1,5 +1,5 @@
 public class InputChecker {
-    public static int check(Scanner scanner, int min, int max) {
+    public static int getValidInput(Scanner scanner, int min, int max) {
         int num = 0;
         boolean valid = false;
 
