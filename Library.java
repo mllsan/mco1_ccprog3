@@ -4,7 +4,7 @@ public class Library implements java.io.Serializable {
     private ArrayList<MediaEntry> entries;
 
     public Library() {
-        entry = new ArrayList<>();
+        entries = new ArrayList<>();
     }
 
     public MediaEntry getEntry(String title) {
@@ -58,14 +58,21 @@ public class Library implements java.io.Serializable {
         } else {
             for(MediaEntry entry : entries) {
                 System.out.println("Title: " + entry.getTitle());
-                System.out.println("Media Type: " + entry.getMediaType());
-
-                if(entry.getMediaType().equals("Album")) {
-                    System.out.println("Artist: " + entry.getArtist());
-                } else if(entry.getMediaType().equals("Anime")) {
-                    System.out.println("Number of Episodes: " + entry.getNumEps());
-                } else {
-                    System.out.println("Duration: " + entry.getDuration() + "minutes");
+                
+                if(entry instanceof Album){
+                    Album album = (Album) entry;
+                    System.out.println("Media Type: Album");
+                    System.out.println("Artist: " + album.getArtist());
+                } 
+                else if(entry instanceof Anime){
+                    Anime anime = (Anime) entry;
+                    System.out.println("Media Type: Anime");
+                    System.out.println("Number of Episodes: " + anime.getNumEps());
+                } 
+                else if(entry instanceof Movie){
+                    Movie movie = (Movie) entry;
+                    System.out.println("Media Type: Movie");
+                    System.out.println("Duration: " + movie.getDuration() + " minutes");
                 }
 
                 System.out.println("Status: " + entry.getStatus());
@@ -105,7 +112,7 @@ public class Library implements java.io.Serializable {
             }
 
             if(!found) {
-                System.out.println("No " + status.toLowerCase() + " entries found.");
+                System.out.println("No " + status.toString().toLowerCase() + " entries found.");
                 System.out.println("-----------------------------------");
             }
         }
