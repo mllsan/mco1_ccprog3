@@ -1,4 +1,4 @@
-# mco1_ccprog3
+# MCO1 CCPROG3
 # S21A Group 2
 - Letran, Jessica
 - Santos, Michaela Lynn 
