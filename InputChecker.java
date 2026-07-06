@@ -11,6 +11,7 @@ public class InputChecker {
 
                 if (num < min || num > max) {
                     System.out.println("Error: Please enter a number between " + min + " and " + max + ".");
+                    System.out.print(">> ");
                 } else {
                     valid = true;
                 }
