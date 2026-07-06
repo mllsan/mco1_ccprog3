@@ -1,27 +1,25 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
         MediaInput media = new MediaInput();
         User activeAccount = null;
 
-        while (activeAccount == null) {
+        while (activeAccount == null){
             System.out.println("[1] Login to Existing Account");
             System.out.println("[2] Create New Account");
             System.out.print(">> ");
             
             int loginChoice = Integer.parseInt(scanner.nextLine());
-
-            if (loginChoice == 1) {
+        
+            if (loginChoice == 1){
                 System.out.print("Enter Username: ");
                 String username = scanner.nextLine();
-                
                 activeAccount = SaveData.loadAccount(username);
-                
-            } 
-            else if (loginChoice == 2) {
-                System.out.print("Create a New Username: ");
+            }
+            else if (loginChoice == 2){
+                System.out.print("Create New Username: ");
                 String newUsername = scanner.nextLine();
                 
                 activeAccount = new User(newUsername);
@@ -35,7 +33,7 @@ public class Main {
         }
 
         boolean running = true;
-        while (running) {
+        while (running){
             System.out.println("\n===================================");
             System.out.println("     MAIN MENU - " + activeAccount.getUsername().toUpperCase());
             System.out.println("===================================");
@@ -47,8 +45,9 @@ public class Main {
             System.out.print(">> ");
             
             int mainChoice = Integer.parseInt(scanner.nextLine());
+            System.out.println("");
 
-            switch (mainChoice) {
+            switch (mainChoice){
                 case 1:
                     activeAccount.getLibrary().displayEntries();
                     break;
@@ -62,20 +61,51 @@ public class Main {
                     System.out.print(">> ");
                     int mediaChoice = Integer.parseInt(scanner.nextLine());
                     
-                    if (mediaChoice == 1) {
+                    if (mediaChoice == 1){
                         Anime anime = media.createAnimeReview();
                         activeAccount.getLibrary().addEntry(anime);
                     } 
-                    else if (mediaChoice == 2) {
+                    else if (mediaChoice == 2){
                         Movie movie = media.createMovieReview();
                         activeAccount.getLibrary().addEntry(movie);
                     } 
-                    else if (mediaChoice == 3) {
+                    else if (mediaChoice == 3){
                         Album album = media.createAlbumReview();
                         activeAccount.getLibrary().addEntry(album);
-                    } 
-                    else {
-                        System.out.println("Error: Invalid choice");
+                    }
+                    else if (mediaChoice == 4){
+                        boolean inEditMenu = true;
+
+                        while (inEditMenu){
+                            System.out.println("\nChoose an Option:");
+                            System.out.println("[1] Edit Anime");
+                            System.out.println("[2] Edit Movie");
+                            System.out.println("[3] Edit Album");
+                            System.out.println("[4] Go Back to Main Menu");
+                            System.out.print(">> ");
+                            int editChoice = Integer.parseInt(scanner.nextLine());
+                            System.out.println("");
+
+                            if (editChoice == 1){
+                                media.editAnimeReview(activeAccount.getLibrary());
+                            } 
+                            else if (editChoice == 2){
+                                media.editMovieReview(activeAccount.getLibrary());
+                            } 
+                            else if (editChoice == 3){
+                                media.editAlbumReview(activeAccount.getLibrary());
+                            } 
+                            else if (editChoice == 4){
+                                System.out.println("Returning to Main Menu...");
+                                inEditMenu = false;
+                            } 
+                            else{
+                                System.out.println("Error: Invalid Option");
+                            }
+                        }
+                    }
+                    else{
+                        System.out.println("Error: Invalid Option");
                     }
                     break;
                     
@@ -89,12 +119,12 @@ public class Main {
                     
                 case 0:
                     SaveData.saveAccount(activeAccount);
-                    System.out.println("Exiting Application, Goodbye!");
+                    System.out.println("Exiting Application...");
                     running = false;
                     break;
                     
                 default:
-                    System.out.println("Error: Invalid Choice");
+                    System.out.println("Error: Invalid Action");
             }
         }
         scanner.close();
