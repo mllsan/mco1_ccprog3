@@ -122,7 +122,7 @@ public class Main {
                     System.out.println("[3] Album");
                     System.out.print(">> ");
                     int mediaChoice = InputChecker.getValidInput(scanner,1,3);
-                    MediaEntry newEntry = media.createMediaReview(mediaChoice, activeAccount.getLibrary());
+                    MediaEntry newEntry = MediaInput.createEntry(mediaChoice, activeAccount.getLibrary());
                     if (newEntry != null) {
                         activeAccount.getLibrary().addEntry(newEntry);
                     }
@@ -133,26 +133,25 @@ public class Main {
                     System.out.print(">> ");
                     String title = scanner.nextLine();
 
-                    System.out.println();
-                    activeAccount.getLibrary().retrieveEntry(title);
-                    System.out.println();
-                    System.out.println("[1] Edit Entry");
-                    System.out.println("[2] Remove Entry");
-                    System.out.println("[3] Go Back to Menu");
-                    System.out.print(">> ");
-                    int editOption = InputChecker.getValidInput(scanner, 1, 3);
+                    MediaEntry entry = getEntry(title);
 
-                    if (editOption==1){
-                        MediaEntry entry = activeAccount.getLibrary().getEntry(title);
+                    if (entry == null) 
+                        System.out.println("Entry not found.");
+                    else {
+                        System.out.println();
+                        activeAccount.getLibrary().retrieveEntry(entry);
+                        System.out.println();
+                        System.out.println("[1] Edit Entry");
+                        System.out.println("[2] Remove Entry");
+                        System.out.println("[3] Go Back to Menu");
+                        System.out.print(">> ");
+                        int editOption = InputChecker.getValidInput(scanner, 1, 3);
 
-                        if (entry == null) {
-                            System.out.println(title + " not found.");
-                        } else {
-                            // need to edit MediaInput first
+                        switch(editOption) {
+                            case 1: MediaInput.editEntry(entry, activeAccount.getLibrary()); break;
+                            case 2: activeAccount.getLibrary().removeEntry(entry); break;
+                            case 3: System.out.println("Returning to Main Menu . . ."); break;
                         }
-                    }
-                    else if (editOption==2){
-                        activeAccount.getLibrary().removeEntry(title);
                     }
                     break;
 
