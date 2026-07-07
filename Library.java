@@ -39,20 +39,10 @@ public class Library implements java.io.Serializable {
     public void retrieveEntry(String title) {
         MediaEntry entry = getEntry(title);
 
-        if(entry == null) {
+        if(entry == null)
             System.out.println(title + " not found.");
-        } else {
-            System.out.println("Title: " + entry.getTitle());
-            if (entry instanceof Album) 
-                System.out.println("Media Type: Album");
-            else if (entry instanceof Anime) 
-                System.out.println("Media Type: Anime");
-            else if (entry instanceof Movie) 
-                System.out.println("Media Type: Movie");
-            System.out.println("Status: " + entry.getStatus());
-            System.out.println("Rating: " + entry.getRating());
-            System.out.println("Review: " + entry.getReview());
-        }
+        else 
+            displayEntry(entry, true, true);
     }
 
     public void displayEntries() {
@@ -62,27 +52,7 @@ public class Library implements java.io.Serializable {
                 System.out.println("Library is empty.");
         } else {
             for(MediaEntry entry : entries) {
-                System.out.println("Title: " + entry.getTitle());
-                
-                if(entry instanceof Album){
-                    Album album = (Album) entry;
-                    System.out.println("Media Type: Album");
-                    System.out.println("Artist: " + album.getArtist());
-                } 
-                else if(entry instanceof Anime){
-                    Anime anime = (Anime) entry;
-                    System.out.println("Media Type: Anime");
-                    System.out.println("Number of Episodes: " + anime.getNumEps());
-                } 
-                else if(entry instanceof Movie){
-                    Movie movie = (Movie) entry;
-                    System.out.println("Media Type: Movie");
-                    System.out.println("Duration: " + movie.getDuration() + " minutes");
-                }
-
-                System.out.println("Status: " + entry.getStatus());
-                System.out.println("Rating: " + entry.getRating());
-                System.out.println("Review: " + entry.getReview());
+                displayEntry(entry, true, true);
                 System.out.println("-----------------------------------");
             }
         }
@@ -91,7 +61,7 @@ public class Library implements java.io.Serializable {
     public void displayEntriesByStatus(Status status) {
         boolean found = false;
 
-        System.out.println("\n======== ENTRIES BY " + status + " =======");
+        System.out.println("\n======== " + status + " ENTRIES =======");
 
         if(entries.isEmpty()) {
                 System.out.println("Library is empty.");
@@ -99,26 +69,7 @@ public class Library implements java.io.Serializable {
             for(MediaEntry entry : entries) {
                 if(entry.getStatus() == status) {
                     found = true;
-                    System.out.println("Title: " + entry.getTitle());
-                    
-                    if(entry instanceof Album) {
-                        Album album = (Album) entry;
-                        System.out.println("Media Type: Album");
-                        System.out.println("Artist: " + album.getArtist());
-                    } 
-                    else if(entry instanceof Anime) {
-                        Anime anime = (Anime) entry;
-                        System.out.println("Media Type: Anime");
-                        System.out.println("Number of Episodes: " + anime.getNumEps());
-                    } 
-                    else if(entry instanceof Movie) {
-                        Movie movie = (Movie) entry;
-                        System.out.println("Media Type: Movie");
-                        System.out.println("Duration: " + movie.getDuration() + " minutes");
-                    }
-
-                    System.out.println("Rating: " + entry.getRating());
-                    System.out.println("Review: " + entry.getReview());
+                    displayEntry(entry, false, true);
                     System.out.println("-----------------------------------");
                 }
             }
@@ -133,37 +84,13 @@ public class Library implements java.io.Serializable {
     public void displayEntriesByMediaType(String type) {
         boolean found = false;
 
-        System.out.println("\n========= ENTRIES BY " + type.toUpperCase() + " ========");
+        System.out.println("\n========= " + type.toUpperCase() + " ENTRIES ========");
         if(entries.isEmpty()) {
                 System.out.println("Library is empty.");
         } else {
             for(MediaEntry entry : entries) {
-                boolean matches = false;
-                if(type.equalsIgnoreCase("Album") && entry instanceof Album) 
-                    matches = true;
-                else if(type.equalsIgnoreCase("Anime") && entry instanceof Anime) 
-                    matches = true;
-                else if(type.equalsIgnoreCase("Movie") && entry instanceof Movie) 
-                    matches = true;
-
-                if(matches) {
-                    found = true;
-                    System.out.println("Title: " + entry.getTitle());
-
-                    if(entry instanceof Album) {
-                        Album album = (Album) entry;
-                        System.out.println("Artist: " + album.getArtist());
-                    } else if(entry instanceof Anime) {
-                        Anime anime = (Anime) entry;
-                        System.out.println("Number of Episodes: " + anime.getNumEps());
-                    } else if(entry instanceof Movie) {
-                        Movie movie = (Movie) entry;
-                        System.out.println("Duration: " + movie.getDuration() + " minutes");
-                    }
-
-                    System.out.println("Status: " + entry.getStatus());
-                    System.out.println("Rating: " + entry.getRating());
-                    System.out.println("Review: " + entry.getReview());
+                if(entry.getMediaType().equalsIgnoreCase(type)) {
+                    displayEntry(entry, true, false);
                     System.out.println("-----------------------------------");
                 }
             }
@@ -176,11 +103,8 @@ public class Library implements java.io.Serializable {
     }
 
     public void displaySummary() {
-        int planned = 0;
-        int inProgress = 0;
-        int completed = 0;
-        int totalRating = 0;
-        int ratedEntries = 0;
+        int planned = 0, inProgress = 0, completed = 0;
+        int totalRating = 0, ratedEntries = 0;
 
         for(MediaEntry entry : entries) {
             switch(entry.getStatus()) {
@@ -193,11 +117,10 @@ public class Library implements java.io.Serializable {
                 case COMPLETED:
                     completed++;
 
-                    if(entry.getRating() > -1) {
+                    if(entry.getRating() != -1) {
                         ratedEntries++;
                         totalRating += entry.getRating();
                     }
-
                     break;
             }
         }
@@ -216,5 +139,25 @@ public class Library implements java.io.Serializable {
         } else {
             System.out.println("Average Rating: N/A");
         }
+    }
+
+    private void displayEntry(MediaEntry entry, boolean showStatus, boolean showMediaType) {
+        System.out.println("Title: " + entry.getTitle());
+
+        if (showMediaType)
+            System.out.println("Media Type: " + entry.getMediaType());
+
+        if(entry instanceof Album)
+            System.out.println("Artist: " + ((Album) entry).getArtist());
+        else if(entry instanceof Anime)
+            System.out.println("Number of Episodes: " + ((Anime) entry).getNumEps());
+        else if(entry instanceof Movie)
+            System.out.println("Duration: " + ((Movie) entry).getDuration() + " minutes");
+        
+        if (showStatus)
+            System.out.println("Status: " + entry.getStatus());
+
+        System.out.println("Rating: " + entry.getDisplayRating());
+        System.out.println("Review: " + entry.getDisplayReview());
     }
 }
