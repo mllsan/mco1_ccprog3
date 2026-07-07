@@ -60,6 +60,17 @@ public abstract class MediaEntry implements java.io.Serializable {
         }
     }
 
+    public String getDisplayRating() {
+        String rate;
+
+        if (rating == -1)
+            rate = "-";
+        else
+            rate = String.valueOf(rating);
+        
+        return rate;
+    }
+
     public String getReview(){
         return review;
     }
@@ -71,5 +82,16 @@ public abstract class MediaEntry implements java.io.Serializable {
             System.out.println("Only completed entries can be reviewed.");
             this.review = "";
         }
+    }
+
+    public String getDisplayReview() {
+        String rev;
+
+        if (review.isBlank())
+            rev = "-"
+        else
+            rev = review;
+        
+        return rev;
     }
 }
