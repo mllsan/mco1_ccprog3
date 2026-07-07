@@ -17,32 +17,17 @@ public class Library implements java.io.Serializable {
     }
 
     public void addEntry(MediaEntry entry) {
-        if(getEntry(entry.getTitle()) != null) {
-            System.out.println("Entry already exists.");
-        } else {
-            entries.add(entry);
-            System.out.println("Entry added successfully!");
-        }
+        entries.add(entry);
+        System.out.println("Entry added successfully!");
     }
 
-    public void removeEntry(String title) {
-        MediaEntry entry = getEntry(title);
-
-        if(entry == null) {
-            System.out.println("Entry not found.");
-        } else {
-            entries.remove(entry);
-            System.out.println("Entry removed successfully!");
-        }
+    public void removeEntry(MediaEntry entry) {
+        entries.remove(entry);
+        System.out.println("Entry removed successfully!");
     }
 
-    public void retrieveEntry(String title) {
-        MediaEntry entry = getEntry(title);
-
-        if(entry == null)
-            System.out.println(title + " not found.");
-        else 
-            displayEntry(entry, true, true);
+    public void retrieveEntry(MediaEntry entry) {
+        displayEntry(entry, true, true);
     }
 
     public void displayEntries() {
