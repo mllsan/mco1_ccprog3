@@ -9,7 +9,7 @@ public class MediaInput {
         System.out.println("[2] In Progress");
         System.out.println("[3] Completed");
         System.out.print(">> ");
-        int choice = Integer.parseInt(input.nextLine());
+        int choice = InputChecker.getValidInput(scanner,1,3);
 
         switch (choice){
             case 1: return Status.PLANNED;
@@ -21,8 +21,8 @@ public class MediaInput {
         }
     }
 
-    public MediaEntry createMediaReview(int mediaChoice, Library library){
-        int rating = 0, numOfEps = 0, duration = 0, reviewExists = 1;
+    public MediaEntry createEntry(int mediaChoice, Library library){
+        int rating = -1, numOfEps = 0, duration = 0;
         String review = "", artist = "";
         MediaEntry result = null;
 
@@ -30,11 +30,8 @@ public class MediaInput {
         String title = input.nextLine();
 
         if (library.getEntry(title) != null) {
-            System.out.println("Error: An Entry with the Title '" + title + "' Already Exists in the Library.");
-            reviewExists = -1; 
-        }
-
-        if (reviewExists!=-1){
+            System.out.println("Error: An Entry with the Title '" + title + "' Already Exists.");
+        } else {
             Status status = statusChosen();
 
             if (mediaChoice == 1){
@@ -48,9 +45,9 @@ public class MediaInput {
                 artist = input.nextLine();
             }
 
-            if (status != Status.PLANNED){
-                System.out.print("Enter Rating (1-5): ");
-                rating = Integer.parseInt(input.nextLine());
+            if (status == Status.COMPLETED){
+                System.out.print("Enter Rating (1-10): ");
+                rating = InputChecker.getValidInput(scanner,1,10);
 
                 System.out.print("Enter Review: ");
                 review = input.nextLine();
@@ -69,211 +66,83 @@ public class MediaInput {
         return result;
     }
 
-    public void editAnimeReview(Library library){
-        System.out.print("Search Anime Title: ");
-        String title = input.nextLine();
+    public void editEntry(MediaEntry entry, Library library){
+        int choice; 
 
-        MediaEntry entry = library.getEntry(title);
+        do {
+            System.out.println("\n--- Editing " + entry.getTitle() + " ---");
+            System.out.println("[1] Edit Title");
+            System.out.println("[2] Edit Status");
+            System.out.println("[3] Edit Rating");
+            System.out.println("[4] Edit Review");
 
-        if (entry == null){
-            System.out.println("'" + title + "' Not Found");
-        } 
-        else{
-            Anime anime = (Anime) entry;
-            boolean editing = true;
-
-            while (editing){
-                System.out.println("\n--- Editing " + anime.getTitle() + " ---");
-                System.out.println("[1] Edit Title");
-                System.out.println("[2] Edit Status");
-                System.out.println("[3] Edit Rating and Review");
-                System.out.println("[4] Edit Number of Episodes");
-                System.out.println("[5] Finish & Go Back");
-                System.out.print(">> ");
-                int choice = Integer.parseInt(input.nextLine());
-
-                switch (choice){
-                    case 1:
-                        System.out.print("Enter New Title: ");
-                        anime.setTitle(input.nextLine());
-                        System.out.println("Title Updated!");
-                        break;
-                    case 2:
-                        Status newStatus = statusChosen();
-                        anime.setStatus(newStatus);
-                        
-                        if (newStatus == Status.PLANNED){
-                            anime.setRating(0);
-                            anime.setReview("");
-                            System.out.println("Status Updated!");
-                        } 
-                        else{
-                            System.out.println("Status Updated!");
-                        }
-                        break;
-                    case 3:
-                        if (anime.getStatus() == Status.PLANNED){
-                            System.out.println("Cannot Add a Rating and Review to a PLANNED Anime");
-                        } 
-                        else{
-                            System.out.print("Enter New Rating (1-5): ");
-                            anime.setRating(Integer.parseInt(input.nextLine()));
-                            System.out.print("Enter New Review: ");
-                            anime.setReview(input.nextLine());
-                            System.out.println("Rating Updated!");
-                        }
-                        break;
-                    case 4:
-                            System.out.print("Enter New Number of Episodes: ");
-                            anime.setNumEps(Integer.parseInt(input.nextLine()));
-                            System.out.println("Episodes Updated!");
-                        break;
-                    case 5:
-                        editing = false;
-                        break;
-                    default:
-                        System.out.println("Error: Invalid Option");
-                }
-            }
-        }
-    }
-
-    public void editMovieReview(Library library){
-        System.out.print("Search Movie Title: ");
-        String title = input.nextLine();
-
-        MediaEntry entry = library.getEntry(title);
-
-        if (entry == null){
-            System.out.println("'" + title + "' Not Found");
-        }
-        else{
-            Movie movie = (Movie) entry;
-            boolean editing = true;
-
-            while (editing) {
-                System.out.println("\n--- Editing " + movie.getTitle() + " ---");
-                System.out.println("[1] Edit Title");
-                System.out.println("[2] Edit Status");
-                System.out.println("[3] Edit Rating");
-                System.out.println("[4] Edit Review");
+            if (entry.getMediaType().equals("Anime")) 
+                System.out.println("[5] Edit Number of Episodes");
+            else if (entry.getMediaType().equals("Movie"))
                 System.out.println("[5] Edit Duration");
-                System.out.println("[6] Finish & Go Back");
-                System.out.print(">> ");
-                int choice = Integer.parseInt(input.nextLine());
-
-                switch (choice){
-                    case 1:
-                        System.out.print("Enter New Title: ");
-                        movie.setTitle(input.nextLine());
-                        System.out.println("Title Updated!");
-                        break;
-                    case 2:
-                        Status newStatus = statusChosen();
-                        movie.setStatus(newStatus);
-                        
-                        if (newStatus == Status.PLANNED){
-                            movie.setRating(0);
-                            movie.setReview("");
-                            System.out.println("Status Updated!");
-                        } 
-                        else{
-                            System.out.println("Status Updated!");
-                        }
-                        break;
-                    case 3:
-                        if (movie.getStatus() == Status.PLANNED) {
-                            System.out.println("Cannot Add a Rating and Review to a PLANNED Movie");
-                        } else {
-                            System.out.print("Enter New Rating (1-5): ");
-                            movie.setRating(Integer.parseInt(input.nextLine()));
-                            System.out.print("Enter New Review: ");
-                            movie.setReview(input.nextLine());
-                            System.out.println("Rating Updated!");
-                        }
-                        break;
-                    case 4:
-                            System.out.print("Enter New Duration (minutes): ");
-                            movie.setDuration(Integer.parseInt(input.nextLine()));
-                            System.out.println("Duration Updated!");
-                        break;
-                    case 5:
-                        editing = false;
-                        break;
-                    default:
-                        System.out.println("Error: Invalid Option");
-                }
-            }
-        }
-    }
-
-    public void editAlbumReview(Library library){
-        System.out.print("Search Album Title: ");
-        String title = input.nextLine();
-
-        MediaEntry entry = library.getEntry(title);
-
-        if (entry == null){
-            System.out.println("'" + title + "' Not Found");
-        }
-        else{
-            Album album = (Album) entry;
-            boolean editing = true;
-
-            while (editing){
-                System.out.println("\n--- Editing " + album.getTitle() + " ---");
-                System.out.println("[1] Edit Title");
-                System.out.println("[2] Edit Status");
-                System.out.println("[3] Edit Rating");
-                System.out.println("[4] Edit Review");
+            else if (entry.getMediaType().equals("Album"))
                 System.out.println("[5] Edit Artist Name");
-                System.out.println("[6] Finish & Go Back");
-                System.out.print(">> ");
-                int choice = Integer.parseInt(input.nextLine());
 
-                switch (choice){
-                    case 1:
-                        System.out.print("Enter New Title: ");
-                        album.setTitle(input.nextLine());
+            System.out.println("[6] Finish & Go Back");
+            System.out.print(">> ");
+            choice = InputChecker.getValidInput(scanner,1,6);
+
+            switch (choice){
+                case 1:
+                    System.out.print("Enter New Title: ");
+                    String newTitle = input.nextLine();
+
+                    if (library.getEntry(newTitle) != null) {
+                        System.out.println("An Entry with that Title Already Exists.");
+                    } else {
+                        entry.setTitle(newTitle);
                         System.out.println("Title Updated!");
-                        break;
-                    case 2:
-                        Status newStatus = statusChosen();
-                        album.setStatus(newStatus);
-                        
-                        if (newStatus == Status.PLANNED){
-                            album.setRating(0);
-                            album.setReview("");
-                            System.out.println("Status Updated!");
-                        } 
-                        else{
-                            System.out.println("Status Updated!");
-                        }
-                        break;
-                    case 3:
-                        if (album.getStatus() == Status.PLANNED){
-                            System.out.println("Cannot Add a Rating and Review to a PLANNED Album");
-                        } 
-                        else{
-                            System.out.print("Enter New Rating (1-5): ");
-                            album.setRating(Integer.parseInt(input.nextLine()));
-                            System.out.print("Enter New Review: ");
-                            album.setReview(input.nextLine());
-                            System.out.println("Rating Updated!");
-                        }
-                        break;
-                    case 4:
-                            System.out.print("Enter New Artist Name: ");
-                            album.setArtist(input.nextLine());
-                            System.out.println("Artist Updated!");
-                        break;
-                    case 5:
-                        editing = false;
-                        break;
-                    default:
-                        System.out.println("Error: Invalid Option");
+                    }
+                    break;
+                case 2:
+                    Status newStatus = statusChosen();
+                    entry.setStatus(newStatus);
+                    System.out.println("Status Updated!");
+                    break;
+                case 3:
+                    if (entry.getStatus() != Status.COMPLETED){
+                        System.out.println("Only Completed Entries can be Rated.");
+                    } else {
+                        System.out.print("Enter New Rating (1-10): ");
+                        entry.setRating(InputChecker.getValidInput(scanner,1,10));
+                        System.out.println("Rating Updated!");
+                    }
+                    break;
+                case 4:
+                    if (entry.getStatus() != Status.COMPLETED){
+                        System.out.println("Only Completed Entries can be Reviewed.");
+                    } else {
+                        System.out.print("Enter New Review: ");
+                        entry.setReview(input.nextLine());
+                        System.out.println("Review Updated!");
+                    }
+                    break;
+                case 5:
+                    if (entry instanceof Anime) {
+                        System.out.print("Enter New Number of Episodes: ");
+                        ((Anime) entry).setNumEps(Integer.parseInt(input.nextLine()));
+                        System.out.println("Episodes Updated!");
+                    } else if (entry instanceof Movie) {
+                        System.out.print("Enter New Duration (minutes): ");
+                        ((Movie) entry).setDuration(Integer.parseInt(input.nextLine()));
+                        System.out.println("Duration Updated!");
+                    } else if (entry instanceof Album) {
+                        System.out.print("Enter New Artist Name: ");
+                        ((Album) entry).setArtist(input.nextLine());
+                        System.out.println("Artist Updated!");
+                    }
+                    break;
+                case 6:
+                    System.out.println("Returning to Main Menu . . .");
+                    break;
+                default:
+                    System.out.println("Error: Invalid Option");
                 }
-            }
-        }
+        } while (choice != 6);
     }
 }
