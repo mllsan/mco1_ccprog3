@@ -12,7 +12,7 @@ public abstract class MediaEntry implements java.io.Serializable {
             this.rating = rating;
             this.review = review;
         } else {
-            this rating = -1;
+            this.rating = -1;
             this.review = "";
         }
     }
@@ -88,7 +88,7 @@ public abstract class MediaEntry implements java.io.Serializable {
         String rev;
 
         if (review.isBlank())
-            rev = "-"
+            rev = "-";
         else
             rev = review;
         

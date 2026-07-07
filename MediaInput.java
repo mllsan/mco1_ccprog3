@@ -9,7 +9,7 @@ public class MediaInput {
         System.out.println("[2] In Progress");
         System.out.println("[3] Completed");
         System.out.print(">> ");
-        int choice = InputChecker.getValidInput(scanner,1,3);
+        int choice = InputChecker.getValidInput(input,1,3);
 
         switch (choice){
             case 1: return Status.PLANNED;
@@ -47,7 +47,7 @@ public class MediaInput {
 
             if (status == Status.COMPLETED){
                 System.out.print("Enter Rating (1-10): ");
-                rating = InputChecker.getValidInput(scanner,1,10);
+                rating = InputChecker.getValidInput(input,1,10);
 
                 System.out.print("Enter Review: ");
                 review = input.nextLine();
@@ -85,7 +85,7 @@ public class MediaInput {
 
             System.out.println("[6] Finish & Go Back");
             System.out.print(">> ");
-            choice = InputChecker.getValidInput(scanner,1,6);
+            choice = InputChecker.getValidInput(input,1,6);
 
             switch (choice){
                 case 1:
@@ -109,7 +109,7 @@ public class MediaInput {
                         System.out.println("Only Completed Entries can be Rated.");
                     } else {
                         System.out.print("Enter New Rating (1-10): ");
-                        entry.setRating(InputChecker.getValidInput(scanner,1,10));
+                        entry.setRating(InputChecker.getValidInput(input,1,10));
                         System.out.println("Rating Updated!");
                     }
                     break;

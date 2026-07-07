@@ -122,7 +122,7 @@ public class Main {
                     System.out.println("[3] Album");
                     System.out.print(">> ");
                     int mediaChoice = InputChecker.getValidInput(scanner,1,3);
-                    MediaEntry newEntry = MediaInput.createEntry(mediaChoice, activeAccount.getLibrary());
+                    MediaEntry newEntry = media.createEntry(mediaChoice, activeAccount.getLibrary());
                     if (newEntry != null) {
                         activeAccount.getLibrary().addEntry(newEntry);
                     }
@@ -133,7 +133,7 @@ public class Main {
                     System.out.print(">> ");
                     String title = scanner.nextLine();
 
-                    MediaEntry entry = getEntry(title);
+                    MediaEntry entry = activeAccount.getLibrary().getEntry(title);
 
                     if (entry == null) 
                         System.out.println("Entry not found.");
@@ -148,7 +148,7 @@ public class Main {
                         int editOption = InputChecker.getValidInput(scanner, 1, 3);
 
                         switch(editOption) {
-                            case 1: MediaInput.editEntry(entry, activeAccount.getLibrary()); break;
+                            case 1: media.editEntry(entry, activeAccount.getLibrary()); break;
                             case 2: activeAccount.getLibrary().removeEntry(entry); break;
                             case 3: System.out.println("Returning to Main Menu . . ."); break;
                         }
