@@ -38,7 +38,7 @@ public abstract class MediaEntry implements java.io.Serializable {
         }
     }
 
-    **
+    /**
      * Returns the specific media type.
      *
      * Implemented by each subclass.
