@@ -139,7 +139,9 @@ public class Main {
                         System.out.println("Entry not found.");
                     else {
                         System.out.println();
+                        System.out.println("-----------------------------------");
                         activeAccount.getLibrary().retrieveEntry(entry);
+                        System.out.println("-----------------------------------");
                         System.out.println();
                         System.out.println("[1] Edit Entry");
                         System.out.println("[2] Remove Entry");
