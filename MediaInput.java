@@ -1,8 +1,22 @@
 import java.util.Scanner;
 
+/**
+ * Handles user input for creating and editing media entries.
+ *
+ * Relationships:
+ * - Uses a Scanner object to receive user input.
+ * - Interacts with the Library to manage media entries.
+ * - Creates and modifies MediaEntry objects and its subclasses.
+ * - Used by Main to process user input for media entries.
+ */
 public class MediaInput {
     private Scanner input = new Scanner(System.in);
 
+    /**
+     * Prompts the user to select a status for a media entry.
+     *
+     * @return the Status selected by the user
+     */
     private Status statusChosen(){
         System.out.println("Select Status:");
         System.out.println("[1] Planned");
@@ -21,6 +35,14 @@ public class MediaInput {
         }
     }
 
+    /**
+     * Creates a new media entry based on the user's selected media type.
+     * Prompts the user to enter the required information.
+     *
+     * @param mediaChoice the selected media type
+     * @param library the user's library
+     * @return the created MediaEntry
+     */
     public MediaEntry createEntry(int mediaChoice, Library library){
         int rating = -1, numOfEps = 0, duration = 0;
         String review = "", artist = "";
@@ -66,6 +88,14 @@ public class MediaInput {
         return result;
     }
 
+    /**
+     * Allows the user to edit the attributes of an existing media entry.
+     * Prompts the user to enter the updated information of the 
+     * attributes they wish to edit.
+     *
+     * @param entry the MediaEntry to edit
+     * @param library the user's library
+     */
     public void editEntry(MediaEntry entry, Library library){
         int choice; 
 
