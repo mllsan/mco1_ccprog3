@@ -1,12 +1,31 @@
 import java.util.ArrayList;
 
+/**
+ * Represents a user's media library that stores and manages media entries.
+ *
+ * Relationships:
+ * - Has a collection of MediaEntry objects using an ArrayList.
+ * - Manages MediaEntry objects and its subclasses.
+ * - Is serializable, allowing the library and its contents to be saved and loaded.
+ *
+ */
 public class Library implements java.io.Serializable {
     private ArrayList<MediaEntry> entries;
 
+    /**
+     * Constructs an empty Library.
+     * Initializes the collection of media entries.
+     */
     public Library() {
         entries = new ArrayList<>();
     }
 
+    /**
+     * Searches for a media entry by its title.
+     *
+     * @param title the title of the media entry to search for
+     * @return the matching MediaEntry if found; otherwise, null
+     */
     public MediaEntry getEntry(String title) {
         for(MediaEntry entry : entries) {
             if(entry.getTitle().equalsIgnoreCase(title)) {
@@ -16,20 +35,39 @@ public class Library implements java.io.Serializable {
         return null;
     }
 
+    /**
+     * Adds a media entry to the library.
+     *
+     * @param entry the MediaEntry to add
+     */
     public void addEntry(MediaEntry entry) {
         entries.add(entry);
         System.out.println("Entry added successfully!");
     }
 
+    /**
+     * Removes a media entry from the library.
+     *
+     * @param entry the MediaEntry to remove
+     */
     public void removeEntry(MediaEntry entry) {
         entries.remove(entry);
         System.out.println("Entry removed successfully!");
     }
 
+    /**
+     * Displays the details of a specific media entry.
+     *
+     * @param entry the MediaEntry to retrieve and display
+     */
     public void retrieveEntry(MediaEntry entry) {
         displayEntry(entry, true, true);
     }
 
+    /**
+     * Displays all media entries stored in the library.
+     * However, if the library is empty, a message is displayed.
+     */
     public void displayEntries() {
         System.out.println("\n=========== ALL ENTRIES ===========");
 
@@ -43,6 +81,11 @@ public class Library implements java.io.Serializable {
         }
     }
 
+    /**
+     * Displays all media entries with the specified status.
+     *
+     * @param status the status used to filter media entries
+     */
     public void displayEntriesByStatus(Status status) {
         boolean found = false;
 
@@ -66,6 +109,11 @@ public class Library implements java.io.Serializable {
         }
     }
 
+    /**
+     * Displays all media entries of the specified media type.
+     *
+     * @param type the media type used to filter entries
+     */
     public void displayEntriesByMediaType(String type) {
         boolean found = false;
 
@@ -87,6 +135,11 @@ public class Library implements java.io.Serializable {
         }
     }
 
+    /**
+     * Displays a summary of the library which includes the total number of entries,
+     * number of planned, in-progress, and completed entries,
+     * and the user's average rating of completed entries
+     */
     public void displaySummary() {
         int planned = 0, inProgress = 0, completed = 0;
         int totalRating = 0, ratedEntries = 0;
@@ -126,6 +179,13 @@ public class Library implements java.io.Serializable {
         }
     }
 
+    /**
+     * Displays the details of a specific media entry.
+     *
+     * @param entry the MediaEntry to display
+     * @param showStatus true to display the entry's status and false to hide
+     * @param showMediaType true to display the media type and false to hide
+     */
     private void displayEntry(MediaEntry entry, boolean showStatus, boolean showMediaType) {
         System.out.println("Title: " + entry.getTitle());
 
