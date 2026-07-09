@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 /**
- * Represents a user account in the media library system.
+ * Represents a user account in the media vault system.
  *
  * Relationships:
  * - Has a Library object, where the user's media entries are stored.
