@@ -11,38 +11,95 @@ public class Main {
             System.out.println("[2] Create New Account");
             System.out.print(">> ");
             
-            int loginChoice = Integer.parseInt(scanner.nextLine());
+            int loginChoice = InputChecker.getValidInput(scanner,1,2);
         
-            if (loginChoice == 1){
-                System.out.print("Enter Username: ");
-                String username = scanner.nextLine();
-                activeAccount = SaveData.loadAccount(username);
-            }
-            else if (loginChoice == 2) {
-                String newUsername = "";
-                boolean choosingUsername = true;
+            switch(loginChoice){
+                case 1:
+                    System.out.print("Enter Username: ");
+                    String username = scanner.nextLine();
+                    User loadedProfile = SaveData.loadAccount(username);
 
-                while (choosingUsername) {
-                    System.out.print("Create New Username: ");
-                    newUsername = scanner.nextLine();
+                    if (loadedProfile != null) {
+                        boolean checkingPassword = true;
+                        System.out.print("Enter Password: ");
+                        String firstTryPassword = scanner.nextLine();
+                        
+                        if (loadedProfile.getPassword().equals(firstTryPassword)){
+                            activeAccount = loadedProfile;
+                            checkingPassword = false;
+                            System.out.println();
+                            System.out.println("Welcome Back " + username + "!");
+                        }
+                        else {
+                            System.out.println("\nError: Incorrect password.");
+                            while (checkingPassword) {
+                                System.out.println("[1] Try Password Again");
+                                System.out.println("[2] Forgot Password");
+                                System.out.println("[3] Go Back");
+                                System.out.print(">> ");
+                                int pwChoice = InputChecker.getValidInput(scanner,1,3);
 
-                    if (SaveData.accountExists(newUsername)) {
-                        System.out.println("Error: Username '" + newUsername + "' Already Taken.\n");
-                    } else {
-                        choosingUsername = false;
+                                switch (pwChoice){
+                                    case 1:
+                                        System.out.print("Enter Password: ");
+                                        String loopPassword = scanner.nextLine();
+                                        if (loadedProfile.getPassword().equals(loopPassword)) { 
+                                            activeAccount = loadedProfile;
+                                            checkingPassword = false; 
+                                            System.out.println();
+                                            System.out.println("Welcome Back " + username + "!");
+                                        } else {
+                                            System.out.println("Error: Incorrect password.\n");
+                                        }
+                                        break;
+                                    case 2:
+                                        System.out.println("\n[RESET PASSWORD]");
+                                        System.out.print("Enter Your New Password: ");
+                                        String newPassword = scanner.nextLine();
+                                        
+                                        loadedProfile.setPassword(newPassword);
+                                        SaveData.saveAccount(loadedProfile);
+                                        
+                                        System.out.println("Password Reset Successfully!");
+                                        System.out.println("Returning to Login...\n");
+                                        checkingPassword = false;
+                                        break;
+                                    case 3:
+                                        System.out.println("Returning to Login...\n");
+                                        checkingPassword = false;
+                                        break;
+                                }
+                            }
+                        }
                     }
-                }
-                activeAccount = new User(newUsername);
-                System.out.println("User '" + newUsername + "' Created Successfully!");
-                SaveData.saveAccount(activeAccount);
-            }
-            else {
-                System.out.println("Error: Invalid choice\n");
+                    break;
+                case 2:
+                    String newUsername = "";
+                    String newPassword = "";
+                    boolean choosingUsername = true;
+
+                    while (choosingUsername) {
+                        System.out.print("Create New Username: ");
+                        newUsername = scanner.nextLine();
+
+                        System.out.print("Create New Password: ");
+                        newPassword = scanner.nextLine();
+
+                        if (SaveData.accountExists(newUsername)) {
+                            System.out.println("Error: Username '" + newUsername + "' Already Taken.\n");
+                        } else {
+                            choosingUsername = false;
+                        }
+                    }
+                    activeAccount = new User(newUsername, newPassword);
+                    System.out.println("User '" + newUsername + "' Created Successfully!");
+                    SaveData.saveAccount(activeAccount);
+                    break;
             }
         }
 
         boolean running = true;
-        while (running){
+        while (running && activeAccount != null){
             System.out.println("\n===================================");
             System.out.println("     MAIN MENU - " + activeAccount.getUsername().toUpperCase());
             System.out.println("===================================");
