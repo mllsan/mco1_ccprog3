@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  */
 public class User implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long SERIAL_VERSION_UID = 1L;
     private String username;
     private String password;
     private Library library;
