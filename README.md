@@ -5,4 +5,4 @@
 
 # **How to view javadoc**
 
-Open index.html
+Open javadoc file and open index.html
