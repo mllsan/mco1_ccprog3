@@ -3,13 +3,6 @@
 - Letran, Jessica
 - Santos, Michaela Lynn 
 
-# **How to run the program**
+# **How to view javadoc**
 
-Enter this in terminal to compile the program: 
-```
-javac *.java
-```
-Enter this in terminal to run the program:
-```
-java Main
-```
+Open index.html
