@@ -123,6 +123,7 @@ public class Library implements java.io.Serializable {
         } else {
             for(MediaEntry entry : entries) {
                 if(entry.getMediaType().equalsIgnoreCase(type)) {
+                    found = true;
                     displayEntry(entry, true, false);
                     System.out.println("-----------------------------------");
                 }
