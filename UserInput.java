@@ -131,13 +131,12 @@ public class UserInput {
             System.out.print("Create New Username: ");
             newUsername = scanner.nextLine();
 
-            System.out.print("Create New Password: ");
-            newPassword = scanner.nextLine();
-
             if (SaveData.accountExists(newUsername)) {
                 System.out.println("Error: Username '" + newUsername + "' Already Taken.\n");
             } else {
                 choosingUsername = false;
+                System.out.print("Create New Password: ");
+                newPassword = scanner.nextLine();
             }
         }
         
