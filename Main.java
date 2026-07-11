@@ -30,7 +30,7 @@ public class Main {
                     System.out.println("[3] Media Type");
                     System.out.print(">> ");
                     int viewChoice = InputChecker.getValidInput(scanner,1,3);
-                    System.out.println("");
+                    System.out.println();
 
                     switch (viewChoice) {
                         case 1:
@@ -89,6 +89,7 @@ public class Main {
                     System.out.println("[3] Album");
                     System.out.print(">> ");
                     int mediaChoice = InputChecker.getValidInput(scanner,1,3);
+                    System.out.println();
                     MediaEntry newEntry = media.createEntry(mediaChoice, activeAccount.getLibrary());
                     if (newEntry != null) {
                         activeAccount.getLibrary().addEntry(newEntry);
