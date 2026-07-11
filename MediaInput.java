@@ -116,6 +116,7 @@ public class MediaInput {
             System.out.println("[6] Finish & Go Back");
             System.out.print(">> ");
             choice = InputChecker.getValidInput(input,1,6);
+            System.out.println();
 
             switch (choice){
                 case 1:
@@ -132,6 +133,11 @@ public class MediaInput {
                 case 2:
                     Status newStatus = statusChosen();
                     entry.setStatus(newStatus);
+                    System.out.print("Enter Rating (1-10): ");
+                    entry.setRating(InputChecker.getValidInput(input, 1, 10));
+
+                    System.out.print("Enter Review: ");
+                    entry.setReview(input.nextLine());
                     System.out.println("Status Updated!");
                     break;
                 case 3:
